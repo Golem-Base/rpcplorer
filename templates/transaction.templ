@@ -44,7 +44,7 @@ templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Bl
 					<div class="border-b pb-3">
 						<div class="text-gray-500 text-sm mb-1">Block:</div>
 						<div class="flex items-center">
-							<a href="#" class="text-blue-500 hover:text-blue-700">{ block.Number().String() }</a>
+							<a href={ templ.SafeURL("/block/" + block.Number().String()) } class="text-blue-500 hover:text-blue-700">{ block.Number().String() }</a>
 							<span class="text-gray-500 ml-2">({ strconv.Itoa(block.Transactions().Len()) } txns)</span>
 						</div>
 					</div>
@@ -61,7 +61,7 @@ templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Bl
 					<div class="border-b pb-3">
 						<div class="text-gray-500 text-sm mb-1">From:</div>
 						<div class="flex items-center">
-							<a href="#" class="text-blue-500 hover:text-blue-700 break-all">
+							<a href={ templ.SafeURL("/address/" + from.Hex()) } class="text-blue-500 hover:text-blue-700 break-all">
 								{ from.Hex() }
 							</a>
 							<button class="ml-2 text-blue-500 hover:text-blue-700" onclick="navigator.clipboard.writeText('{ from.Hex() }')">
@@ -75,7 +75,7 @@ templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Bl
 						<div class="text-gray-500 text-sm mb-1">To:</div>
 						<div class="flex items-center">
 							if tx.To() != nil {
-								<a href="#" class="text-blue-500 hover:text-blue-700 break-all">
+								<a href={ templ.SafeURL("/address/" + tx.To().Hex()) } class="text-blue-500 hover:text-blue-700 break-all">
 									{ tx.To().Hex() }
 								</a>
 								<button class="ml-2 text-blue-500 hover:text-blue-700" onclick="navigator.clipboard.writeText('{ tx.To().Hex() }')">

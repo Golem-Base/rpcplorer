@@ -1,0 +1,86 @@
+package templates
+
+import (
+	"github.com/ethereum/go-ethereum/common"
+	"fmt"
+	"math/big"
+)
+
+type AddressPageData struct {
+	Address            common.Address
+	Balance            *big.Int
+	TransactionCount   uint64
+	IsContract         bool
+	ContractCode       []byte
+}
+
+templ Address(data AddressPageData) {
+	@Layout("Address " + data.Address.Hex() + " | RPCPlorer") {
+		<div class="container mx-auto px-4 py-8">
+			<!-- Address Overview Card -->
+			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+				<h1 class="text-2xl font-semibold text-gray-800 mb-4">Address</h1>
+				<div class="mb-4">
+					<div class="p-3 bg-blue-50 rounded-md flex items-center">
+						<div class="mr-3 bg-blue-100 rounded-full p-2">
+							if data.IsContract {
+								<i class="fas fa-file-contract text-blue-500"></i>
+							} else {
+								<i class="fas fa-user text-blue-500"></i>
+							}
+						</div>
+						<span class="text-gray-600 break-all">{ data.Address.Hex() }</span>
+						<button class="ml-2 text-blue-500 hover:text-blue-700" onclick="navigator.clipboard.writeText('{ data.Address.Hex() }')">
+							<i class="fas fa-copy"></i>
+						</button>
+					</div>
+				</div>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- Balance -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Balance:</div>
+						<div>
+							{ formatEther(data.Balance) } ETH
+						</div>
+					</div>
+					
+					<!-- Transactions -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Transactions:</div>
+						<div>
+							{ fmt.Sprintf("%d", data.TransactionCount) } txns
+						</div>
+					</div>
+					
+					<!-- Contract -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Contract:</div>
+						<div>
+							if data.IsContract {
+								<span class="text-green-500">Yes <i class="fas fa-check-circle"></i></span>
+								<span class="ml-2 text-sm text-gray-500">({ fmt.Sprintf("%d bytes", len(data.ContractCode)) } code size)</span>
+							} else {
+								<span class="text-red-500">No <i class="fas fa-times-circle"></i></span>
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+// Helper function to format ETH values
+func formatEther(wei *big.Int) string {
+	if wei == nil {
+		return "0"
+	}
+	
+	// Convert wei to ether
+	// 1 ether = 10^18 wei
+	d := new(big.Float).SetInt(wei)
+	d = d.Quo(d, new(big.Float).SetFloat64(1e18))
+	
+	return fmt.Sprintf("%.6f", d)
+} 

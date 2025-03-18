@@ -113,7 +113,7 @@ templ TransactionsList(blocks []*types.Block) {
 							</p>
 							<p class="text-sm text-gray-500">
 								if tx.To() != nil {
-									To: { shortenHash(tx.To().Hex()) }
+									To: <a href={ templ.SafeURL("/address/" + tx.To().Hex()) } class="text-blue-500">{ shortenHash(tx.To().Hex()) }</a>
 								} else {
 									Contract Creation
 								}
@@ -162,7 +162,7 @@ templ BlocksList(blocks []*types.Block) {
 							</p>
 						</div>
 						<div class="text-right">
-							<p class="text-gray-800">Miner: <span class="text-blue-500">{ shortenHash(block.Coinbase().Hex()) }</span></p>
+							<p class="text-gray-800">Miner: <a href={ templ.SafeURL("/address/" + block.Coinbase().Hex()) } class="text-blue-500">{ shortenHash(block.Coinbase().Hex()) }</a></p>
 							<p class="text-sm text-gray-500">{ strconv.Itoa(len(block.Transactions())) } txns</p>
 						</div>
 					</div>
