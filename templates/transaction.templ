@@ -1,0 +1,141 @@
+package templates
+
+import (
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"fmt"
+	"math/big"
+	"strconv"
+	"time"
+)
+
+templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Block, currentGasPrice *big.Int, from common.Address) {
+	@Layout("Transaction Details | RPCPlorer") {
+		<div class="container mx-auto px-4 py-8">
+			<!-- Transaction Summary Card -->
+			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+				<h1 class="text-2xl font-semibold text-gray-800 mb-4">Transaction Details</h1>
+				<div class="mb-4">
+					<div class="p-3 bg-blue-50 rounded-md flex items-center">
+						<div class="mr-3 bg-blue-100 rounded-full p-2">
+							<i class="fas fa-exchange-alt text-blue-500"></i>
+						</div>
+						<span class="text-gray-600 break-all">{ tx.Hash().Hex() }</span>
+						<button class="ml-2 text-blue-500 hover:text-blue-700" onclick="navigator.clipboard.writeText('{ tx.Hash().Hex() }')">
+							<i class="fas fa-copy"></i>
+						</button>
+					</div>
+				</div>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+					<!-- Status -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Status:</div>
+						<div class="flex items-center">
+							if receipt.Status == 1 {
+								<span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Success</span>
+							} else {
+								<span class="bg-red-100 text-red-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded">Failed</span>
+							}
+						</div>
+					</div>
+					
+					<!-- Block -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Block:</div>
+						<div class="flex items-center">
+							<a href="#" class="text-blue-500 hover:text-blue-700">{ block.Number().String() }</a>
+							<span class="text-gray-500 ml-2">({ strconv.Itoa(block.Transactions().Len()) } txns)</span>
+						</div>
+					</div>
+					
+					<!-- Timestamp -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Timestamp:</div>
+						<div>
+							{ time.Unix(int64(block.Time()), 0).Format(time.RFC1123) }
+						</div>
+					</div>
+					
+					<!-- From -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">From:</div>
+						<div class="flex items-center">
+							<a href="#" class="text-blue-500 hover:text-blue-700 break-all">
+								{ from.Hex() }
+							</a>
+							<button class="ml-2 text-blue-500 hover:text-blue-700" onclick="navigator.clipboard.writeText('{ from.Hex() }')">
+								<i class="fas fa-copy"></i>
+							</button>
+						</div>
+					</div>
+					
+					<!-- To -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">To:</div>
+						<div class="flex items-center">
+							if tx.To() != nil {
+								<a href="#" class="text-blue-500 hover:text-blue-700 break-all">
+									{ tx.To().Hex() }
+								</a>
+								<button class="ml-2 text-blue-500 hover:text-blue-700" onclick="navigator.clipboard.writeText('{ tx.To().Hex() }')">
+									<i class="fas fa-copy"></i>
+								</button>
+							} else {
+								<span class="italic text-gray-500">Contract Creation</span>
+							}
+						</div>
+					</div>
+					
+					<!-- Value -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Value:</div>
+						<div>
+							{ tx.Value().String() } ETH
+						</div>
+					</div>
+					
+					<!-- Transaction Fee -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Transaction Fee:</div>
+						<div>
+							{ fmt.Sprintf("%.8f", float64(receipt.GasUsed) * float64(tx.GasPrice().Uint64()) / 1e18) } ETH
+						</div>
+					</div>
+					
+					<!-- Gas Price -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Gas Price:</div>
+						<div>
+							{ tx.GasPrice().String() } Wei ({ fmt.Sprintf("%.2f", float64(tx.GasPrice().Uint64()) / 1e9) } Gwei)
+						</div>
+					</div>
+					
+					<!-- Gas Limit & Usage -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Gas Limit & Usage:</div>
+						<div>
+							{ fmt.Sprintf("%d | %d (%0.2f%%)", tx.Gas(), receipt.GasUsed, float64(receipt.GasUsed) / float64(tx.Gas()) * 100) }
+						</div>
+					</div>
+					
+					<!-- Nonce -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Nonce:</div>
+						<div>
+							{ fmt.Sprintf("%d", tx.Nonce()) }
+						</div>
+					</div>
+					
+					<!-- Input Data -->
+					<div class="col-span-1 md:col-span-2 border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Input Data:</div>
+						<div class="bg-gray-50 p-3 rounded text-xs font-mono overflow-x-auto break-all">
+							{ common.Bytes2Hex(tx.Data()) }
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+} 

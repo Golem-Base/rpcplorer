@@ -108,7 +108,9 @@ templ TransactionsList(blocks []*types.Block) {
 							<i class="fas fa-exchange-alt text-blue-500"></i>
 						</div>
 						<div class="flex-1">
-							<p class="text-blue-500 font-medium truncate">{ shortenHash(tx.Hash().Hex()) }</p>
+							<p class="text-blue-500 font-medium truncate">
+								<a href={ templ.SafeURL("/tx/" + tx.Hash().Hex()) }>{ shortenHash(tx.Hash().Hex()) }</a>
+							</p>
 							<p class="text-sm text-gray-500">
 								if tx.To() != nil {
 									To: { shortenHash(tx.To().Hex()) }

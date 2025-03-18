@@ -55,6 +55,9 @@ func main() {
 			// Main page handler
 			mux.HandleFunc("GET /", handlers.HomeHandler(client, log))
 
+			// Transaction details page
+			mux.HandleFunc("GET /tx/{hash}", handlers.TransactionHandler(client, log))
+
 			log.Info("Starting server on :8080")
 			return http.ListenAndServe(":8080", mux)
 		},
