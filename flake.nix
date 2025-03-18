@@ -45,6 +45,7 @@
                 shellcheck
                 (templ.packages.${system}.default)
                 (gorefresh.packages.${system}.default)
+                overmind
               ];
             };
           }
