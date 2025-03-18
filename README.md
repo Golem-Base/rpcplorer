@@ -10,6 +10,7 @@ A lightweight Ethereum blockchain explorer that connects directly to any Ethereu
 - **Direct Node Connection**: Works with any Ethereum-compatible JSON-RPC endpoint.
 - **Clean, Modern UI**: Responsive design with Tailwind CSS.
 - **Fast Performance**: Server-side rendering with HTMX for smooth interactions.
+- **Pagination**: Browse through blockchain history with efficient pagination controls.
 
 ## Installation
 
@@ -58,6 +59,7 @@ A lightweight Ethereum blockchain explorer that connects directly to any Ethereu
 ## Available Pages
 
 - **Home**: `/` - Overview of latest blocks and transactions
+- **Blocks History**: `/blocks` - Paginated list of blocks (50 per page) with age, transaction count, gas usage, and miner info
 - **Block Details**: `/block/{number or hash}` - Detailed view of a specific block
 - **Transaction Details**: `/tx/{hash}` - Detailed view of a specific transaction
 

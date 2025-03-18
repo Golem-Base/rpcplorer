@@ -1,0 +1,154 @@
+package templates
+
+import (
+	"github.com/ethereum/go-ethereum/core/types"
+	"strconv"
+	"time"
+	"fmt"
+)
+
+templ Blocks(blocks []*types.Block, currentPage int, hasNextPage bool, latestBlockNumber uint64) {
+	@Layout("Blocks History | RPCPlorer") {
+		<div class="container mx-auto px-4 py-8">
+			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+				<h1 class="text-2xl font-semibold text-gray-800 mb-4">Ethereum Blocks</h1>
+				<p class="text-gray-600 mb-6">Showing blocks { strconv.FormatUint(latestBlockNumber - uint64(49*currentPage), 10) } to { strconv.FormatUint(latestBlockNumber - uint64(49*(currentPage-1)), 10) }</p>
+				
+				<div class="overflow-x-auto">
+					<table class="min-w-full divide-y divide-gray-200">
+						<thead class="bg-gray-50">
+							<tr>
+								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Block
+								</th>
+								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Age
+								</th>
+								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Txn
+								</th>
+								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Gas Used
+								</th>
+								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Gas Limit
+								</th>
+								<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+									Miner
+								</th>
+							</tr>
+						</thead>
+						<tbody class="bg-white divide-y divide-gray-200">
+							for _, block := range blocks {
+								<tr class="hover:bg-gray-50">
+									<td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-500">
+										<div class="flex items-center">
+											<div class="bg-red-100 rounded-full p-2 mr-3">
+												<i class="fas fa-cube text-red-500"></i>
+											</div>
+											<a href={ templ.SafeURL("/block/" + strconv.FormatUint(block.NumberU64(), 10)) }>
+												{ strconv.FormatUint(block.NumberU64(), 10) }
+											</a>
+										</div>
+									</td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{ formatTimeAgo(time.Unix(int64(block.Time()), 0)) }
+									</td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
+										<a href={ templ.SafeURL("/txs?block=" + strconv.FormatUint(block.NumberU64(), 10)) }>
+											{ strconv.Itoa(len(block.Transactions())) }
+										</a>
+									</td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{ formatWithCommas(block.GasUsed()) }
+										<span class="text-xs text-gray-400 ml-1">
+											({ fmt.Sprintf("%.1f%%", float64(block.GasUsed())/float64(block.GasLimit())*100) })
+										</span>
+									</td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+										{ formatWithCommas(block.GasLimit()) }
+									</td>
+									<td class="px-6 py-4 whitespace-nowrap text-sm text-blue-500">
+										<a href="#" class="truncate max-w-xs inline-block">
+											{ shortenHash(block.Coinbase().Hex()) }
+										</a>
+									</td>
+								</tr>
+							}
+							if len(blocks) == 0 {
+								<tr>
+									<td colspan="6" class="px-6 py-4 text-center text-gray-500">
+										No blocks available
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Pagination -->
+				<div class="mt-6 flex justify-between items-center">
+					<div>
+						if currentPage > 1 {
+							<a href={ templ.SafeURL("/blocks?page=" + strconv.Itoa(currentPage-1)) } class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+								<i class="fas fa-chevron-left mr-1"></i> Previous
+							</a>
+						} else {
+							<button disabled class="px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+								<i class="fas fa-chevron-left mr-1"></i> Previous
+							</button>
+						}
+					</div>
+					<div class="text-sm text-gray-500">
+						Page { strconv.Itoa(currentPage) }
+					</div>
+					<div>
+						if hasNextPage {
+							<a href={ templ.SafeURL("/blocks?page=" + strconv.Itoa(currentPage+1)) } class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+								Next <i class="fas fa-chevron-right ml-1"></i>
+							</a>
+						} else {
+							<button disabled class="px-4 py-2 bg-gray-300 text-gray-500 rounded-md cursor-not-allowed">
+								Next <i class="fas fa-chevron-right ml-1"></i>
+							</button>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+// Helper function to format time as "X time ago"
+func formatTimeAgo(t time.Time) string {
+	duration := time.Since(t)
+	
+	if duration.Hours() > 24 {
+		days := int(duration.Hours() / 24)
+		return strconv.Itoa(days) + " days ago"
+	} else if duration.Hours() >= 1 {
+		hours := int(duration.Hours())
+		return strconv.Itoa(hours) + " hrs ago"
+	} else if duration.Minutes() >= 1 {
+		minutes := int(duration.Minutes())
+		return strconv.Itoa(minutes) + " mins ago"
+	} else {
+		seconds := int(duration.Seconds())
+		return strconv.Itoa(seconds) + " secs ago"
+	}
+}
+
+// Helper function to format numbers with commas
+func formatWithCommas(n uint64) string {
+	result := ""
+	str := strconv.FormatUint(n, 10)
+	
+	for i, c := range str {
+		if i > 0 && (len(str)-i)%3 == 0 {
+			result += ","
+		}
+		result += string(c)
+	}
+	
+	return result
+} 

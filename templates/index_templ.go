@@ -327,7 +327,7 @@ func BlocksList(blocks []*types.Block) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div class=\"border-t px-6 py-3 text-center\"><a href=\"#\" class=\"text-blue-500 hover:text-blue-700\">View all blocks</a></div>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "<div class=\"border-t px-6 py-3 text-center\"><a href=\"/blocks\" class=\"text-blue-500 hover:text-blue-700\">View all blocks</a></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

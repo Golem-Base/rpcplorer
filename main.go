@@ -61,6 +61,9 @@ func main() {
 			// Block details page - can use either block number or hash
 			mux.HandleFunc("GET /block/{id}", handlers.BlockHandler(client, log))
 
+			// Blocks history page with pagination
+			mux.HandleFunc("GET /blocks", handlers.BlocksHandler(client, log))
+
 			log.Info("Starting server on :8080")
 			return http.ListenAndServe(":8080", mux)
 		},
