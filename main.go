@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/Golem-Base/rpcplorer/templates"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/urfave/cli/v2"
 )
 
@@ -28,6 +29,24 @@ func main() {
 			},
 		},
 		Action: func(c *cli.Context) error {
+
+			log.Info("Connecting to Ethereum node", "url", cfg.nodeURL)
+
+			client, err := ethclient.Dial(cfg.nodeURL)
+			if err != nil {
+				log.Error("Failed to connect to the Ethereum node", "error", err)
+				return err
+			}
+			defer client.Close()
+
+			// Verify connection by getting network ID
+			networkID, err := client.NetworkID(c.Context)
+			if err != nil {
+				log.Error("Failed to get network ID", "error", err)
+				return err
+			}
+			log.Info("Connected to Ethereum network", "networkID", networkID)
+
 			mux := http.NewServeMux()
 			mux.HandleFunc(
 				"/",

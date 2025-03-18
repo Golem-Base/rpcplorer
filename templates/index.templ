@@ -2,18 +2,227 @@ package templates
 
 templ Index() {
 	@Layout("RPCplorer - Home") {
-		<div class="container">
-			<h2>Welcome to RPCplorer</h2>
-			<p>Explore RPC endpoints with ease.</p>
-			
-			<div class="features">
-				<div class="feature-card">
-					<h3>RPC Exploration</h3>
-					<p>Discover and interact with RPC endpoints.</p>
+		<div class="container mx-auto px-4 py-8">
+			<!-- Hero Section -->
+			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+				<div class="mb-6">
+					<h2 class="text-2xl font-semibold text-gray-800 mb-2">Welcome to RPCplorer</h2>
+					<p class="text-gray-600">Explore blockchain data with ease - the leading blockchain explorer, search, API and analytics platform</p>
 				</div>
-				<div class="feature-card">
-					<h3>API Documentation</h3>
-					<p>Access comprehensive API documentation.</p>
+				
+				<div class="md:hidden mb-6">
+					<div class="relative">
+						<input type="text" placeholder="Search by Address / Txn Hash / Block / Token" 
+							class="w-full py-3 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+						<button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</div>
+				
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+						<div class="flex items-center justify-between">
+							<div>
+								<p class="text-gray-600 text-sm">TOTAL TRANSACTIONS</p>
+								<p class="text-xl font-semibold">1,234,567,890</p>
+							</div>
+							<div class="text-blue-500">
+								<i class="fas fa-exchange-alt text-2xl"></i>
+							</div>
+						</div>
+					</div>
+					
+					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+						<div class="flex items-center justify-between">
+							<div>
+								<p class="text-gray-600 text-sm">ETHER PRICE</p>
+								<p class="text-xl font-semibold">$3,245.67</p>
+							</div>
+							<div class="text-green-500">
+								<i class="fas fa-chart-line text-2xl"></i>
+							</div>
+						</div>
+					</div>
+					
+					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+						<div class="flex items-center justify-between">
+							<div>
+								<p class="text-gray-600 text-sm">MARKET CAP</p>
+								<p class="text-xl font-semibold">$386.21 B</p>
+							</div>
+							<div class="text-purple-500">
+								<i class="fas fa-globe text-2xl"></i>
+							</div>
+						</div>
+					</div>
+					
+					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
+						<div class="flex items-center justify-between">
+							<div>
+								<p class="text-gray-600 text-sm">LATEST BLOCK</p>
+								<p class="text-xl font-semibold">14,567,890</p>
+							</div>
+							<div class="text-red-500">
+								<i class="fas fa-cube text-2xl"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Latest Transactions and Blocks Section -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+				<!-- Latest Transactions -->
+				<div class="bg-white rounded-lg shadow-md">
+					<div class="border-b px-6 py-4">
+						<h3 class="text-lg font-medium text-gray-800">Latest Transactions</h3>
+					</div>
+					<div class="divide-y">
+						<div class="px-6 py-3 hover:bg-gray-50">
+							<div class="flex items-center">
+								<div class="bg-blue-100 rounded-full p-2 mr-3">
+									<i class="fas fa-exchange-alt text-blue-500"></i>
+								</div>
+								<div class="flex-1">
+									<p class="text-blue-500 font-medium truncate">0x7fb21ac4cd75d9de3e1c5d11d87bb904c01880...c826</p>
+									<p class="text-sm text-gray-500">2 mins ago</p>
+								</div>
+								<div class="text-right">
+									<p class="text-gray-800">0.156 ETH</p>
+									<p class="text-sm text-gray-500">$507.45</p>
+								</div>
+							</div>
+						</div>
+						<div class="px-6 py-3 hover:bg-gray-50">
+							<div class="flex items-center">
+								<div class="bg-blue-100 rounded-full p-2 mr-3">
+									<i class="fas fa-exchange-alt text-blue-500"></i>
+								</div>
+								<div class="flex-1">
+									<p class="text-blue-500 font-medium truncate">0x3ab874cbe27b784e9e329accdf75c47970c25c...a124</p>
+									<p class="text-sm text-gray-500">5 mins ago</p>
+								</div>
+								<div class="text-right">
+									<p class="text-gray-800">1.24 ETH</p>
+									<p class="text-sm text-gray-500">$4,024.63</p>
+								</div>
+							</div>
+						</div>
+						<div class="px-6 py-3 hover:bg-gray-50">
+							<div class="flex items-center">
+								<div class="bg-blue-100 rounded-full p-2 mr-3">
+									<i class="fas fa-exchange-alt text-blue-500"></i>
+								</div>
+								<div class="flex-1">
+									<p class="text-blue-500 font-medium truncate">0x9de4f768824f476c15454e685fb517e56a1cd...9e17</p>
+									<p class="text-sm text-gray-500">7 mins ago</p>
+								</div>
+								<div class="text-right">
+									<p class="text-gray-800">0.075 ETH</p>
+									<p class="text-sm text-gray-500">$243.42</p>
+								</div>
+							</div>
+						</div>
+						<div class="border-t px-6 py-3 text-center">
+							<a href="#" class="text-blue-500 hover:text-blue-700">View all transactions</a>
+						</div>
+					</div>
+				</div>
+				
+				<!-- Latest Blocks -->
+				<div class="bg-white rounded-lg shadow-md">
+					<div class="border-b px-6 py-4">
+						<h3 class="text-lg font-medium text-gray-800">Latest Blocks</h3>
+					</div>
+					<div class="divide-y">
+						<div class="px-6 py-3 hover:bg-gray-50">
+							<div class="flex items-center">
+								<div class="bg-red-100 rounded-full p-2 mr-3">
+									<i class="fas fa-cube text-red-500"></i>
+								</div>
+								<div class="flex-1">
+									<p class="text-blue-500 font-medium">14,567,890</p>
+									<p class="text-sm text-gray-500">1 min ago</p>
+								</div>
+								<div class="text-right">
+									<p class="text-gray-800">Validator: <span class="text-blue-500">0x71C...a3F</span></p>
+									<p class="text-sm text-gray-500">153 txns</p>
+								</div>
+							</div>
+						</div>
+						<div class="px-6 py-3 hover:bg-gray-50">
+							<div class="flex items-center">
+								<div class="bg-red-100 rounded-full p-2 mr-3">
+									<i class="fas fa-cube text-red-500"></i>
+								</div>
+								<div class="flex-1">
+									<p class="text-blue-500 font-medium">14,567,889</p>
+									<p class="text-sm text-gray-500">3 mins ago</p>
+								</div>
+								<div class="text-right">
+									<p class="text-gray-800">Validator: <span class="text-blue-500">0x89D...b2E</span></p>
+									<p class="text-sm text-gray-500">124 txns</p>
+								</div>
+							</div>
+						</div>
+						<div class="px-6 py-3 hover:bg-gray-50">
+							<div class="flex items-center">
+								<div class="bg-red-100 rounded-full p-2 mr-3">
+									<i class="fas fa-cube text-red-500"></i>
+								</div>
+								<div class="flex-1">
+									<p class="text-blue-500 font-medium">14,567,888</p>
+									<p class="text-sm text-gray-500">5 mins ago</p>
+								</div>
+								<div class="text-right">
+									<p class="text-gray-800">Validator: <span class="text-blue-500">0x45A...c7D</span></p>
+									<p class="text-sm text-gray-500">187 txns</p>
+								</div>
+							</div>
+						</div>
+						<div class="border-t px-6 py-3 text-center">
+							<a href="#" class="text-blue-500 hover:text-blue-700">View all blocks</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Features Section -->
+			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
+				<h3 class="text-xl font-semibold text-gray-800 mb-6">Explore Our Features</h3>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+					<div class="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+						<div class="text-blue-500 mb-3">
+							<i class="fas fa-search text-3xl"></i>
+						</div>
+						<h4 class="text-lg font-medium text-gray-800 mb-2">RPC Exploration</h4>
+						<p class="text-gray-600">Discover and interact with RPC endpoints. Test methods, view responses, and debug transactions.</p>
+					</div>
+					<div class="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+						<div class="text-green-500 mb-3">
+							<i class="fas fa-book text-3xl"></i>
+						</div>
+						<h4 class="text-lg font-medium text-gray-800 mb-2">API Documentation</h4>
+						<p class="text-gray-600">Access comprehensive API documentation with code examples in multiple programming languages.</p>
+					</div>
+					<div class="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+						<div class="text-purple-500 mb-3">
+							<i class="fas fa-chart-bar text-3xl"></i>
+						</div>
+						<h4 class="text-lg font-medium text-gray-800 mb-2">Analytics Dashboard</h4>
+						<p class="text-gray-600">View detailed analytics about network activity, gas prices, transaction volumes, and more.</p>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Newsletter Section -->
+			<div class="bg-blue-600 rounded-lg shadow-md p-8 text-center">
+				<h3 class="text-xl font-semibold text-white mb-2">Stay Updated with RPCplorer</h3>
+				<p class="text-blue-100 mb-6">Subscribe to our newsletter for the latest updates and feature releases</p>
+				<div class="max-w-md mx-auto flex">
+					<input type="email" placeholder="Your email address" class="flex-1 py-2 px-4 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+					<button class="bg-blue-800 hover:bg-blue-900 text-white py-2 px-6 rounded-r-lg">Subscribe</button>
 				</div>
 			</div>
 		</div>
