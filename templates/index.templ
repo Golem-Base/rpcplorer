@@ -1,13 +1,13 @@
 package templates
 
 templ Index() {
-	@Layout("RPCplorer - Home") {
+	@Layout("RPCPlorer - Home") {
 		<div class="container mx-auto px-4 py-8">
 			<!-- Hero Section -->
 			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
 				<div class="mb-6">
-					<h2 class="text-2xl font-semibold text-gray-800 mb-2">Welcome to RPCplorer</h2>
-					<p class="text-gray-600">Explore blockchain data with ease - the leading blockchain explorer, search, API and analytics platform</p>
+					<h2 class="text-2xl font-semibold text-gray-800 mb-2">Welcome to RPCPlorer</h2>
+					<p class="text-gray-600">Explore blockchain data with ease.</p>
 				</div>
 				
 				<div class="md:hidden mb-6">
@@ -19,56 +19,7 @@ templ Index() {
 						</button>
 					</div>
 				</div>
-				
-				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-						<div class="flex items-center justify-between">
-							<div>
-								<p class="text-gray-600 text-sm">TOTAL TRANSACTIONS</p>
-								<p class="text-xl font-semibold">1,234,567,890</p>
-							</div>
-							<div class="text-blue-500">
-								<i class="fas fa-exchange-alt text-2xl"></i>
-							</div>
-						</div>
-					</div>
-					
-					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-						<div class="flex items-center justify-between">
-							<div>
-								<p class="text-gray-600 text-sm">ETHER PRICE</p>
-								<p class="text-xl font-semibold">$3,245.67</p>
-							</div>
-							<div class="text-green-500">
-								<i class="fas fa-chart-line text-2xl"></i>
-							</div>
-						</div>
-					</div>
-					
-					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-						<div class="flex items-center justify-between">
-							<div>
-								<p class="text-gray-600 text-sm">MARKET CAP</p>
-								<p class="text-xl font-semibold">$386.21 B</p>
-							</div>
-							<div class="text-purple-500">
-								<i class="fas fa-globe text-2xl"></i>
-							</div>
-						</div>
-					</div>
-					
-					<div class="bg-blue-50 p-4 rounded-lg border border-blue-100">
-						<div class="flex items-center justify-between">
-							<div>
-								<p class="text-gray-600 text-sm">LATEST BLOCK</p>
-								<p class="text-xl font-semibold">14,567,890</p>
-							</div>
-							<div class="text-red-500">
-								<i class="fas fa-cube text-2xl"></i>
-							</div>
-						</div>
-					</div>
-				</div>
+		
 			</div>
 			
 			<!-- Latest Transactions and Blocks Section -->
@@ -188,43 +139,8 @@ templ Index() {
 				</div>
 			</div>
 			
-			<!-- Features Section -->
-			<div class="bg-white rounded-lg shadow-md p-6 mb-8">
-				<h3 class="text-xl font-semibold text-gray-800 mb-6">Explore Our Features</h3>
-				<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-					<div class="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-						<div class="text-blue-500 mb-3">
-							<i class="fas fa-search text-3xl"></i>
-						</div>
-						<h4 class="text-lg font-medium text-gray-800 mb-2">RPC Exploration</h4>
-						<p class="text-gray-600">Discover and interact with RPC endpoints. Test methods, view responses, and debug transactions.</p>
-					</div>
-					<div class="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-						<div class="text-green-500 mb-3">
-							<i class="fas fa-book text-3xl"></i>
-						</div>
-						<h4 class="text-lg font-medium text-gray-800 mb-2">API Documentation</h4>
-						<p class="text-gray-600">Access comprehensive API documentation with code examples in multiple programming languages.</p>
-					</div>
-					<div class="p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
-						<div class="text-purple-500 mb-3">
-							<i class="fas fa-chart-bar text-3xl"></i>
-						</div>
-						<h4 class="text-lg font-medium text-gray-800 mb-2">Analytics Dashboard</h4>
-						<p class="text-gray-600">View detailed analytics about network activity, gas prices, transaction volumes, and more.</p>
-					</div>
-				</div>
-			</div>
+	
 			
-			<!-- Newsletter Section -->
-			<div class="bg-blue-600 rounded-lg shadow-md p-8 text-center">
-				<h3 class="text-xl font-semibold text-white mb-2">Stay Updated with RPCplorer</h3>
-				<p class="text-blue-100 mb-6">Subscribe to our newsletter for the latest updates and feature releases</p>
-				<div class="max-w-md mx-auto flex">
-					<input type="email" placeholder="Your email address" class="flex-1 py-2 px-4 rounded-l-lg border-0 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-					<button class="bg-blue-800 hover:bg-blue-900 text-white py-2 px-6 rounded-r-lg">Subscribe</button>
-				</div>
-			</div>
 		</div>
 	}
 } 
