@@ -10,6 +10,7 @@
 
     templ.url = "github:a-h/templ/v0.3.833";
 
+    gorefresh.url = "github:draganm/gorefresh/v0.0.4";
   };
 
   outputs =
@@ -18,6 +19,7 @@
       nixpkgs,
       systems,
       templ,
+      gorefresh,
       ...
     }@inputs:
     let
@@ -42,6 +44,7 @@
                 go
                 shellcheck
                 (templ.packages.${system}.default)
+                (gorefresh.packages.${system}.default)
               ];
             };
           }
