@@ -8,7 +8,21 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Index() templ.Component {
+import (
+	"fmt"
+	"github.com/ethereum/go-ethereum/core/types"
+	"strconv"
+)
+
+// Helper function to shorten hash
+func shortenHash(hash string) string {
+	if len(hash) <= 12 {
+		return hash
+	}
+	return hash[:10] + "..." + hash[len(hash)-4:]
+}
+
+func Index(blocks []*types.Block) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -41,7 +55,180 @@ func Index() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"container mx-auto px-4 py-8\"><!-- Hero Section --><div class=\"bg-white rounded-lg shadow-md p-6 mb-8\"><div class=\"mb-6\"><h2 class=\"text-2xl font-semibold text-gray-800 mb-2\">Welcome to RPCPlorer</h2><p class=\"text-gray-600\">Explore blockchain data with ease.</p></div><div class=\"md:hidden mb-6\"><div class=\"relative\"><input type=\"text\" placeholder=\"Search by Address / Txn Hash / Block / Token\" class=\"w-full py-3 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500\"> <button class=\"absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400\"><i class=\"fas fa-search\"></i></button></div></div></div><!-- Latest Transactions and Blocks Section --><div class=\"grid grid-cols-1 md:grid-cols-2 gap-8 mb-8\"><!-- Latest Transactions --><div class=\"bg-white rounded-lg shadow-md\"><div class=\"border-b px-6 py-4\"><h3 class=\"text-lg font-medium text-gray-800\">Latest Transactions</h3></div><div class=\"divide-y\"><div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-blue-100 rounded-full p-2 mr-3\"><i class=\"fas fa-exchange-alt text-blue-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium truncate\">0x7fb21ac4cd75d9de3e1c5d11d87bb904c01880...c826</p><p class=\"text-sm text-gray-500\">2 mins ago</p></div><div class=\"text-right\"><p class=\"text-gray-800\">0.156 ETH</p><p class=\"text-sm text-gray-500\">$507.45</p></div></div></div><div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-blue-100 rounded-full p-2 mr-3\"><i class=\"fas fa-exchange-alt text-blue-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium truncate\">0x3ab874cbe27b784e9e329accdf75c47970c25c...a124</p><p class=\"text-sm text-gray-500\">5 mins ago</p></div><div class=\"text-right\"><p class=\"text-gray-800\">1.24 ETH</p><p class=\"text-sm text-gray-500\">$4,024.63</p></div></div></div><div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-blue-100 rounded-full p-2 mr-3\"><i class=\"fas fa-exchange-alt text-blue-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium truncate\">0x9de4f768824f476c15454e685fb517e56a1cd...9e17</p><p class=\"text-sm text-gray-500\">7 mins ago</p></div><div class=\"text-right\"><p class=\"text-gray-800\">0.075 ETH</p><p class=\"text-sm text-gray-500\">$243.42</p></div></div></div><div class=\"border-t px-6 py-3 text-center\"><a href=\"#\" class=\"text-blue-500 hover:text-blue-700\">View all transactions</a></div></div></div><!-- Latest Blocks --><div class=\"bg-white rounded-lg shadow-md\"><div class=\"border-b px-6 py-4\"><h3 class=\"text-lg font-medium text-gray-800\">Latest Blocks</h3></div><div class=\"divide-y\"><div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-red-100 rounded-full p-2 mr-3\"><i class=\"fas fa-cube text-red-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium\">14,567,890</p><p class=\"text-sm text-gray-500\">1 min ago</p></div><div class=\"text-right\"><p class=\"text-gray-800\">Validator: <span class=\"text-blue-500\">0x71C...a3F</span></p><p class=\"text-sm text-gray-500\">153 txns</p></div></div></div><div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-red-100 rounded-full p-2 mr-3\"><i class=\"fas fa-cube text-red-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium\">14,567,889</p><p class=\"text-sm text-gray-500\">3 mins ago</p></div><div class=\"text-right\"><p class=\"text-gray-800\">Validator: <span class=\"text-blue-500\">0x89D...b2E</span></p><p class=\"text-sm text-gray-500\">124 txns</p></div></div></div><div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-red-100 rounded-full p-2 mr-3\"><i class=\"fas fa-cube text-red-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium\">14,567,888</p><p class=\"text-sm text-gray-500\">5 mins ago</p></div><div class=\"text-right\"><p class=\"text-gray-800\">Validator: <span class=\"text-blue-500\">0x45A...c7D</span></p><p class=\"text-sm text-gray-500\">187 txns</p></div></div></div><div class=\"border-t px-6 py-3 text-center\"><a href=\"#\" class=\"text-blue-500 hover:text-blue-700\">View all blocks</a></div></div></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"container mx-auto px-4 py-8\"><!-- Hero Section --><div class=\"bg-white rounded-lg shadow-md p-6 mb-8\"><div class=\"mb-6\"><h2 class=\"text-2xl font-semibold text-gray-800 mb-2\">Welcome to RPCPlorer</h2><p class=\"text-gray-600\">Explore blockchain data with ease.</p></div><div class=\"md:hidden mb-6\"><div class=\"relative\"><input type=\"text\" placeholder=\"Search by Address / Txn Hash / Block / Token\" class=\"w-full py-3 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500\"> <button class=\"absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400\"><i class=\"fas fa-search\"></i></button></div></div></div><!-- Latest Transactions and Blocks Section --><div class=\"grid grid-cols-1 md:grid-cols-2 gap-8 mb-8\"><!-- Latest Transactions --><div class=\"bg-white rounded-lg shadow-md\"><div class=\"border-b px-6 py-4\"><h3 class=\"text-lg font-medium text-gray-800\">Latest Transactions</h3></div><div class=\"divide-y\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if len(blocks) > 0 && blocks[0] != nil {
+				for i, tx := range blocks[0].Transactions() {
+					if i < 5 {
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "<div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-blue-100 rounded-full p-2 mr-3\"><i class=\"fas fa-exchange-alt text-blue-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium truncate\">")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var3 string
+						templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(shortenHash(tx.Hash().Hex()))
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 56, Col: 88}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</p><p class=\"text-sm text-gray-500\">")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						if tx.To() != nil {
+							templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "To: ")
+							if templ_7745c5c3_Err != nil {
+								return templ_7745c5c3_Err
+							}
+							var templ_7745c5c3_Var4 string
+							templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(shortenHash(tx.To().Hex()))
+							if templ_7745c5c3_Err != nil {
+								return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 59, Col: 46}
+							}
+							_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+							if templ_7745c5c3_Err != nil {
+								return templ_7745c5c3_Err
+							}
+						} else {
+							templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "Contract Creation")
+							if templ_7745c5c3_Err != nil {
+								return templ_7745c5c3_Err
+							}
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</p></div><div class=\"text-right\"><p class=\"text-gray-800\">")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var5 string
+						templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(tx.Value().String())
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 66, Col: 58}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</p><p class=\"text-sm text-gray-500\">Gas: ")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var6 string
+						templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d", tx.Gas()))
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 67, Col: 79}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</p></div></div></div>")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+					}
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, " ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				if len(blocks[0].Transactions()) == 0 {
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"px-6 py-4 text-center text-gray-500\">No transactions in this block</div>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+			} else {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "<div class=\"px-6 py-4 text-center text-gray-500\">No blocks available</div>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"border-t px-6 py-3 text-center\"><a href=\"#\" class=\"text-blue-500 hover:text-blue-700\">View all transactions</a></div></div></div><!-- Latest Blocks --><div class=\"bg-white rounded-lg shadow-md\"><div class=\"border-b px-6 py-4\"><h3 class=\"text-lg font-medium text-gray-800\">Latest Blocks</h3></div><div class=\"divide-y\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			if len(blocks) > 0 {
+				for i, block := range blocks {
+					if i < 5 && block != nil {
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<div class=\"px-6 py-3 hover:bg-gray-50\"><div class=\"flex items-center\"><div class=\"bg-red-100 rounded-full p-2 mr-3\"><i class=\"fas fa-cube text-red-500\"></i></div><div class=\"flex-1\"><p class=\"text-blue-500 font-medium\">")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var7 string
+						templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.FormatUint(block.NumberU64(), 10))
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 104, Col: 92}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</p><p class=\"text-sm text-gray-500\">Hash: ")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var8 string
+						templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(shortenHash(block.Hash().Hex()))
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 105, Col: 84}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</p></div><div class=\"text-right\"><p class=\"text-gray-800\">Miner: <span class=\"text-blue-500\">")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var9 string
+						templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(shortenHash(block.Coinbase().Hex()))
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 108, Col: 109}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</span></p><p class=\"text-sm text-gray-500\">")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						var templ_7745c5c3_Var10 string
+						templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(len(block.Transactions())))
+						if templ_7745c5c3_Err != nil {
+							return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/index.templ`, Line: 109, Col: 86}
+						}
+						_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, " txns</p></div></div></div>")
+						if templ_7745c5c3_Err != nil {
+							return templ_7745c5c3_Err
+						}
+					}
+				}
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, " ")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+				if len(blocks) == 0 {
+					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "<div class=\"px-6 py-4 text-center text-gray-500\">No blocks available</div>")
+					if templ_7745c5c3_Err != nil {
+						return templ_7745c5c3_Err
+					}
+				}
+			} else {
+				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<div class=\"px-6 py-4 text-center text-gray-500\">No blocks available</div>")
+				if templ_7745c5c3_Err != nil {
+					return templ_7745c5c3_Err
+				}
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, "<div class=\"border-t px-6 py-3 text-center\"><a href=\"#\" class=\"text-blue-500 hover:text-blue-700\">View all blocks</a></div></div></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

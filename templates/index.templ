@@ -1,6 +1,20 @@
 package templates
 
-templ Index() {
+import (
+	"github.com/ethereum/go-ethereum/core/types"
+	"fmt"
+	"strconv"
+)
+
+// Helper function to shorten hash
+func shortenHash(hash string) string {
+	if len(hash) <= 12 {
+		return hash
+	}
+	return hash[:10] + "..." + hash[len(hash)-4:]
+}
+
+templ Index(blocks []*types.Block) {
 	@Layout("RPCPlorer - Home") {
 		<div class="container mx-auto px-4 py-8">
 			<!-- Hero Section -->
@@ -30,51 +44,42 @@ templ Index() {
 						<h3 class="text-lg font-medium text-gray-800">Latest Transactions</h3>
 					</div>
 					<div class="divide-y">
-						<div class="px-6 py-3 hover:bg-gray-50">
-							<div class="flex items-center">
-								<div class="bg-blue-100 rounded-full p-2 mr-3">
-									<i class="fas fa-exchange-alt text-blue-500"></i>
+						if len(blocks) > 0 && blocks[0] != nil {
+							for i, tx := range blocks[0].Transactions() {
+								if i < 5 {
+									<div class="px-6 py-3 hover:bg-gray-50">
+										<div class="flex items-center">
+											<div class="bg-blue-100 rounded-full p-2 mr-3">
+												<i class="fas fa-exchange-alt text-blue-500"></i>
+											</div>
+											<div class="flex-1">
+												<p class="text-blue-500 font-medium truncate">{ shortenHash(tx.Hash().Hex()) }</p>
+												<p class="text-sm text-gray-500">
+													if tx.To() != nil {
+														To: { shortenHash(tx.To().Hex()) }
+													} else {
+														Contract Creation
+													}
+												</p>
+											</div>
+											<div class="text-right">
+												<p class="text-gray-800">{ tx.Value().String() }</p>
+												<p class="text-sm text-gray-500">Gas: { fmt.Sprintf("%d", tx.Gas()) }</p>
+											</div>
+										</div>
+									</div>
+								}
+							}
+							if len(blocks[0].Transactions()) == 0 {
+								<div class="px-6 py-4 text-center text-gray-500">
+									No transactions in this block
 								</div>
-								<div class="flex-1">
-									<p class="text-blue-500 font-medium truncate">0x7fb21ac4cd75d9de3e1c5d11d87bb904c01880...c826</p>
-									<p class="text-sm text-gray-500">2 mins ago</p>
-								</div>
-								<div class="text-right">
-									<p class="text-gray-800">0.156 ETH</p>
-									<p class="text-sm text-gray-500">$507.45</p>
-								</div>
+							}
+						} else {
+							<div class="px-6 py-4 text-center text-gray-500">
+								No blocks available
 							</div>
-						</div>
-						<div class="px-6 py-3 hover:bg-gray-50">
-							<div class="flex items-center">
-								<div class="bg-blue-100 rounded-full p-2 mr-3">
-									<i class="fas fa-exchange-alt text-blue-500"></i>
-								</div>
-								<div class="flex-1">
-									<p class="text-blue-500 font-medium truncate">0x3ab874cbe27b784e9e329accdf75c47970c25c...a124</p>
-									<p class="text-sm text-gray-500">5 mins ago</p>
-								</div>
-								<div class="text-right">
-									<p class="text-gray-800">1.24 ETH</p>
-									<p class="text-sm text-gray-500">$4,024.63</p>
-								</div>
-							</div>
-						</div>
-						<div class="px-6 py-3 hover:bg-gray-50">
-							<div class="flex items-center">
-								<div class="bg-blue-100 rounded-full p-2 mr-3">
-									<i class="fas fa-exchange-alt text-blue-500"></i>
-								</div>
-								<div class="flex-1">
-									<p class="text-blue-500 font-medium truncate">0x9de4f768824f476c15454e685fb517e56a1cd...9e17</p>
-									<p class="text-sm text-gray-500">7 mins ago</p>
-								</div>
-								<div class="text-right">
-									<p class="text-gray-800">0.075 ETH</p>
-									<p class="text-sm text-gray-500">$243.42</p>
-								</div>
-							</div>
-						</div>
+						}
 						<div class="border-t px-6 py-3 text-center">
 							<a href="#" class="text-blue-500 hover:text-blue-700">View all transactions</a>
 						</div>
@@ -87,60 +92,42 @@ templ Index() {
 						<h3 class="text-lg font-medium text-gray-800">Latest Blocks</h3>
 					</div>
 					<div class="divide-y">
-						<div class="px-6 py-3 hover:bg-gray-50">
-							<div class="flex items-center">
-								<div class="bg-red-100 rounded-full p-2 mr-3">
-									<i class="fas fa-cube text-red-500"></i>
+						if len(blocks) > 0 {
+							for i, block := range blocks {
+								if i < 5 && block != nil {
+									<div class="px-6 py-3 hover:bg-gray-50">
+										<div class="flex items-center">
+											<div class="bg-red-100 rounded-full p-2 mr-3">
+												<i class="fas fa-cube text-red-500"></i>
+											</div>
+											<div class="flex-1">
+												<p class="text-blue-500 font-medium">{ strconv.FormatUint(block.NumberU64(), 10) }</p>
+												<p class="text-sm text-gray-500">Hash: { shortenHash(block.Hash().Hex()) }</p>
+											</div>
+											<div class="text-right">
+												<p class="text-gray-800">Miner: <span class="text-blue-500">{ shortenHash(block.Coinbase().Hex()) }</span></p>
+												<p class="text-sm text-gray-500">{ strconv.Itoa(len(block.Transactions())) } txns</p>
+											</div>
+										</div>
+									</div>
+								}
+							}
+							if len(blocks) == 0 {
+								<div class="px-6 py-4 text-center text-gray-500">
+									No blocks available
 								</div>
-								<div class="flex-1">
-									<p class="text-blue-500 font-medium">14,567,890</p>
-									<p class="text-sm text-gray-500">1 min ago</p>
-								</div>
-								<div class="text-right">
-									<p class="text-gray-800">Validator: <span class="text-blue-500">0x71C...a3F</span></p>
-									<p class="text-sm text-gray-500">153 txns</p>
-								</div>
+							}
+						} else {
+							<div class="px-6 py-4 text-center text-gray-500">
+								No blocks available
 							</div>
-						</div>
-						<div class="px-6 py-3 hover:bg-gray-50">
-							<div class="flex items-center">
-								<div class="bg-red-100 rounded-full p-2 mr-3">
-									<i class="fas fa-cube text-red-500"></i>
-								</div>
-								<div class="flex-1">
-									<p class="text-blue-500 font-medium">14,567,889</p>
-									<p class="text-sm text-gray-500">3 mins ago</p>
-								</div>
-								<div class="text-right">
-									<p class="text-gray-800">Validator: <span class="text-blue-500">0x89D...b2E</span></p>
-									<p class="text-sm text-gray-500">124 txns</p>
-								</div>
-							</div>
-						</div>
-						<div class="px-6 py-3 hover:bg-gray-50">
-							<div class="flex items-center">
-								<div class="bg-red-100 rounded-full p-2 mr-3">
-									<i class="fas fa-cube text-red-500"></i>
-								</div>
-								<div class="flex-1">
-									<p class="text-blue-500 font-medium">14,567,888</p>
-									<p class="text-sm text-gray-500">5 mins ago</p>
-								</div>
-								<div class="text-right">
-									<p class="text-gray-800">Validator: <span class="text-blue-500">0x45A...c7D</span></p>
-									<p class="text-sm text-gray-500">187 txns</p>
-								</div>
-							</div>
-						</div>
+						}
 						<div class="border-t px-6 py-3 text-center">
 							<a href="#" class="text-blue-500 hover:text-blue-700">View all blocks</a>
 						</div>
 					</div>
 				</div>
 			</div>
-			
-	
-			
 		</div>
 	}
 } 
