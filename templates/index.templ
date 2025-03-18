@@ -2,7 +2,6 @@ package templates
 
 import (
 	"github.com/ethereum/go-ethereum/core/types"
-	"fmt"
 	"strconv"
 )
 
@@ -38,34 +37,6 @@ templ Index(blocks []*types.Block) {
 			
 			<!-- Latest Transactions and Blocks Section -->
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-				<!-- Latest Transactions -->
-				<div class="bg-white rounded-lg shadow-md">
-					<div class="border-b px-6 py-4 flex justify-between items-center">
-						<h3 class="text-lg font-medium text-gray-800">Latest Transactions</h3>
-						<div class="flex items-center">
-							<div class="text-sm text-green-600 mr-3">
-								<span class="htmx-indicator" id="txn-poll-indicator">
-									<i class="fas fa-circle-notch fa-spin mr-1"></i> Auto-refreshing
-								</span>
-							</div>
-							<button
-								class="text-blue-500 hover:text-blue-700 text-sm flex items-center"
-								hx-get="/api/transactions"
-								hx-target="#latest-transactions"
-								hx-trigger="click, every 2s"
-								hx-indicator="#txn-spinner">
-								<i class="fas fa-sync-alt mr-1"></i> Refresh
-								<span id="txn-spinner" class="htmx-indicator ml-1">
-									<i class="fas fa-circle-notch fa-spin"></i>
-								</span>
-							</button>
-						</div>
-					</div>
-					<div id="latest-transactions" class="divide-y fade-me-in" hx-get="/api/transactions" hx-trigger="load, every 2s" hx-indicator="#txn-poll-indicator">
-						@TransactionsList(blocks)
-					</div>
-				</div>
-				
 				<!-- Latest Blocks -->
 				<div class="bg-white rounded-lg shadow-md">
 					<div class="border-b px-6 py-4 flex justify-between items-center">
@@ -93,53 +64,37 @@ templ Index(blocks []*types.Block) {
 						@BlocksList(blocks)
 					</div>
 				</div>
-			</div>
-		</div>
-	}
-}
-
-templ TransactionsList(blocks []*types.Block) {
-	if len(blocks) > 0 && blocks[0] != nil {
-		for i, tx := range blocks[0].Transactions() {
-			if i < 5 {
-				<div class="px-6 py-3 hover:bg-gray-50 fade-me-in">
-					<div class="flex items-center">
-						<div class="bg-blue-100 rounded-full p-2 mr-3">
-							<i class="fas fa-exchange-alt text-blue-500"></i>
-						</div>
-						<div class="flex-1">
-							<p class="text-blue-500 font-medium truncate">
-								<a href={ templ.SafeURL("/tx/" + tx.Hash().Hex()) }>{ shortenHash(tx.Hash().Hex()) }</a>
-							</p>
-							<p class="text-sm text-gray-500">
-								if tx.To() != nil {
-									To: <a href={ templ.SafeURL("/address/" + tx.To().Hex()) } class="text-blue-500">{ shortenHash(tx.To().Hex()) }</a>
-								} else {
-									Contract Creation
-								}
-							</p>
-						</div>
-						<div class="text-right">
-							<p class="text-gray-800">{ tx.Value().String() }</p>
-							<p class="text-sm text-gray-500">Gas: { fmt.Sprintf("%d", tx.Gas()) }</p>
+				
+				<!-- Latest Transactions -->
+				<div class="bg-white rounded-lg shadow-md">
+					<div class="border-b px-6 py-4 flex justify-between items-center">
+						<h3 class="text-lg font-medium text-gray-800">Latest Transactions</h3>
+						<div class="flex items-center">
+							<div class="text-sm text-green-600 mr-3">
+								<span class="htmx-indicator" id="txn-poll-indicator">
+									<i class="fas fa-circle-notch fa-spin mr-1"></i> Auto-refreshing
+								</span>
+							</div>
+							<button
+								class="text-blue-500 hover:text-blue-700 text-sm flex items-center"
+								hx-get="/api/transactions"
+								hx-target="#latest-transactions"
+								hx-trigger="click, every 2s"
+								hx-indicator="#txn-spinner">
+								<i class="fas fa-sync-alt mr-1"></i> Refresh
+								<span id="txn-spinner" class="htmx-indicator ml-1">
+									<i class="fas fa-circle-notch fa-spin"></i>
+								</span>
+							</button>
 						</div>
 					</div>
+					<div id="latest-transactions" class="divide-y fade-me-in" hx-get="/api/transactions" hx-trigger="load, every 2s" hx-indicator="#txn-poll-indicator">
+						@TransactionsList(blocks)
+					</div>
 				</div>
-			}
-		}
-		if len(blocks[0].Transactions()) == 0 {
-			<div class="px-6 py-4 text-center text-gray-500">
-				No transactions in this block
 			</div>
-		}
-	} else {
-		<div class="px-6 py-4 text-center text-gray-500">
-			No blocks available
 		</div>
 	}
-	<div class="border-t px-6 py-3 text-center">
-		<a href="#" class="text-blue-500 hover:text-blue-700">View all transactions</a>
-	</div>
 }
 
 templ BlocksList(blocks []*types.Block) {

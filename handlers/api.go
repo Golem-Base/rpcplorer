@@ -49,7 +49,7 @@ func (h *APIHandler) GetLatestBlocks(w http.ResponseWriter, r *http.Request) {
 
 // GetLatestTransactions fetches transactions from the latest block
 func (h *APIHandler) GetLatestTransactions(w http.ResponseWriter, r *http.Request) {
-	// Fetch the latest block to get its transactions
+	// Fetch the latest blocks until we have at least 5 transactions
 	header, err := h.client.HeaderByNumber(r.Context(), nil)
 	if err != nil {
 		// Return empty transactions list if there's an error
@@ -57,15 +57,31 @@ func (h *APIHandler) GetLatestTransactions(w http.ResponseWriter, r *http.Reques
 		return
 	}
 
-	block, err := h.client.BlockByNumber(r.Context(), header.Number)
-	if err != nil {
-		// Return empty transactions list if there's an error
-		renderTransactionsList(w, r, []*types.Block{})
-		return
+	blocks := make([]*types.Block, 0)
+	txCount := 0
+	maxBlocks := 10 // Limit the number of blocks to check to avoid excessive fetching
+
+	for i := 0; i < maxBlocks && txCount < 5; i++ {
+		blockNum := new(big.Int).Sub(header.Number, big.NewInt(int64(i)))
+		if blockNum.Sign() < 0 {
+			break // Don't go below block 0
+		}
+
+		block, err := h.client.BlockByNumber(r.Context(), blockNum)
+		if err != nil {
+			continue
+		}
+
+		blocks = append(blocks, block)
+		txCount += len(block.Transactions())
+
+		if txCount >= 5 {
+			break
+		}
 	}
 
-	// Render just the transactions list component
-	renderTransactionsList(w, r, []*types.Block{block})
+	// Render the transactions list component with the collected blocks
+	renderTransactionsList(w, r, blocks)
 }
 
 // RegisterRoutes registers all API routes
