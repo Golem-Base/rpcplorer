@@ -28,11 +28,13 @@ templ Layout(title string) {
 						
 						<div class="hidden md:flex flex-1 justify-center px-4">
 							<div class="relative w-full max-w-xl">
-								<input type="text" placeholder="Search by Address / Txn Hash / Block / Token" 
-									class="w-full py-2 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-								<button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-									<i class="fas fa-search"></i>
-								</button>
+								<form hx-get="/search" hx-trigger="submit" hx-swap="none" class="m-0">
+									<input type="text" name="q" placeholder="Search by Address / Txn Hash / Block Number" 
+										class="w-full py-2 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+									<button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+										<i class="fas fa-search"></i>
+									</button>
+								</form>
 							</div>
 						</div>
 

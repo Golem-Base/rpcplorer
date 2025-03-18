@@ -67,6 +67,9 @@ func main() {
 			// Address details page
 			mux.HandleFunc("GET /address/{addr}", handlers.AddressHandler(client, log))
 
+			// Search handler
+			mux.HandleFunc("GET /search", handlers.SearchHandler(log))
+
 			log.Info("Starting server on :8080")
 			return http.ListenAndServe(":8080", mux)
 		},

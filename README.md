@@ -6,7 +6,8 @@ A lightweight Ethereum blockchain explorer that connects directly to any Ethereu
 
 - **Block Explorer**: View detailed information about blocks, including transactions, gas usage, miner data, and more.
 - **Transaction Explorer**: Examine transaction details, including status, gas costs, input data, and involved addresses.
-- **Address Explorer**: View address balances, transaction history, and identify contracts.
+- **Address Explorer**: View basic address information including balance, transaction count (nonce), and contract status.
+- **Smart Search**: Instant navigation using the search bar that automatically detects and redirects to addresses, transactions, or blocks.
 - **Real-time Updates**: Auto-refreshing display of latest blocks and transactions.
 - **Direct Node Connection**: Works with any Ethereum-compatible JSON-RPC endpoint.
 - **Clean, Modern UI**: Responsive design with Tailwind CSS.
@@ -64,6 +65,7 @@ A lightweight Ethereum blockchain explorer that connects directly to any Ethereu
 - **Block Details**: `/block/{number or hash}` - Detailed view of a specific block
 - **Transaction Details**: `/tx/{hash}` - Detailed view of a specific transaction
 - **Address Details**: `/address/{address}` - View basic address information including balance, transaction count (nonce), and contract status
+- **Search**: `/search?q={query}` - Smart search endpoint that detects query type and redirects accordingly
 
 ## Development
 
