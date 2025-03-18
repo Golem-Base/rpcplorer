@@ -58,6 +58,9 @@ func main() {
 			// Transaction details page
 			mux.HandleFunc("GET /tx/{hash}", handlers.TransactionHandler(client, log))
 
+			// Block details page - can use either block number or hash
+			mux.HandleFunc("GET /block/{id}", handlers.BlockHandler(client, log))
+
 			log.Info("Starting server on :8080")
 			return http.ListenAndServe(":8080", mux)
 		},

@@ -152,8 +152,14 @@ templ BlocksList(blocks []*types.Block) {
 							<i class="fas fa-cube text-red-500"></i>
 						</div>
 						<div class="flex-1">
-							<p class="text-blue-500 font-medium">{ strconv.FormatUint(block.NumberU64(), 10) }</p>
-							<p class="text-sm text-gray-500">Hash: { shortenHash(block.Hash().Hex()) }</p>
+							<p class="text-blue-500 font-medium">
+								<a href={ templ.SafeURL("/block/" + strconv.FormatUint(block.NumberU64(), 10)) }>
+									{ strconv.FormatUint(block.NumberU64(), 10) }
+								</a>
+							</p>
+							<p class="text-sm text-gray-500">
+								Hash: <a href={ templ.SafeURL("/block/" + block.Hash().Hex()) }>{ shortenHash(block.Hash().Hex()) }</a>
+							</p>
 						</div>
 						<div class="text-right">
 							<p class="text-gray-800">Miner: <span class="text-blue-500">{ shortenHash(block.Coinbase().Hex()) }</span></p>
