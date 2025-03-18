@@ -12,9 +12,21 @@ import (
 func main() {
 	log := slog.New(slog.NewTextHandler(os.Stdout, nil))
 
+	cfg := struct {
+		nodeURL string
+	}{}
+
 	app := &cli.App{
-		Name:  "myapp",
-		Usage: "make an explosive entrance",
+		Name: "rpcplorer",
+		Flags: []cli.Flag{
+			&cli.StringFlag{
+				Name:        "node-url",
+				Usage:       "Node URL",
+				Destination: &cfg.nodeURL,
+				EnvVars:     []string{"NODE_URL"},
+				Required:    true,
+			},
+		},
 		Action: func(c *cli.Context) error {
 			mux := http.NewServeMux()
 			mux.HandleFunc(

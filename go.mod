@@ -1,6 +1,6 @@
 module github.com/Golem-Base/rpcplorer
 
-go 1.23.6
+go 1.24.1
 
 require (
 	github.com/a-h/templ v0.3.833
