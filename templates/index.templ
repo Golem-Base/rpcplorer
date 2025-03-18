@@ -52,7 +52,7 @@ templ Index(blocks []*types.Block) {
 								class="text-blue-500 hover:text-blue-700 text-sm flex items-center"
 								hx-get="/api/transactions"
 								hx-target="#latest-transactions"
-								hx-trigger="click, every 15s"
+								hx-trigger="click, every 2s"
 								hx-indicator="#txn-spinner">
 								<i class="fas fa-sync-alt mr-1"></i> Refresh
 								<span id="txn-spinner" class="htmx-indicator ml-1">
@@ -61,7 +61,7 @@ templ Index(blocks []*types.Block) {
 							</button>
 						</div>
 					</div>
-					<div id="latest-transactions" class="divide-y fade-me-in" hx-get="/api/transactions" hx-trigger="load, every 15s" hx-indicator="#txn-poll-indicator">
+					<div id="latest-transactions" class="divide-y fade-me-in" hx-get="/api/transactions" hx-trigger="load, every 2s" hx-indicator="#txn-poll-indicator">
 						@TransactionsList(blocks)
 					</div>
 				</div>
@@ -80,7 +80,7 @@ templ Index(blocks []*types.Block) {
 								class="text-blue-500 hover:text-blue-700 text-sm flex items-center"
 								hx-get="/api/blocks" 
 								hx-target="#latest-blocks"
-								hx-trigger="click, every 15s"
+								hx-trigger="click, every 2s"
 								hx-indicator="#block-spinner">
 								<i class="fas fa-sync-alt mr-1"></i> Refresh
 								<span id="block-spinner" class="htmx-indicator ml-1">
@@ -89,7 +89,7 @@ templ Index(blocks []*types.Block) {
 							</button>
 						</div>
 					</div>
-					<div id="latest-blocks" class="divide-y fade-me-in" hx-get="/api/blocks" hx-trigger="load, every 15s" hx-indicator="#block-poll-indicator">
+					<div id="latest-blocks" class="divide-y fade-me-in" hx-get="/api/blocks" hx-trigger="load, every 2s" hx-indicator="#block-poll-indicator">
 						@BlocksList(blocks)
 					</div>
 				</div>
