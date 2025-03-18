@@ -8,6 +8,8 @@
 
     systems.url = "github:nix-systems/default";
 
+    templ.url = "github:a-h/templ/v0.3.833";
+
   };
 
   outputs =
@@ -15,39 +17,38 @@
       self,
       nixpkgs,
       systems,
+      templ,
       ...
     }@inputs:
     let
       eachSystem =
-        f:
         nixpkgs.lib.genAttrs (import systems) (
           system:
-          f (
-            import nixpkgs {
-              inherit system;
-              config = {
-                allowUnfree = true;
-              };
-            }
-          )
+          let pkgs = import nixpkgs {
+            inherit system;
+            config = {
+              allowUnfree = true;
+            };
+          };
+          in
+          {
+            default = pkgs.mkShell {
+              shellHook = ''
+                # Set here the env vars you want to be available in the shell
+              '';
+              hardeningDisable = [ "all" ];
+
+              packages = with pkgs; [
+                go
+                shellcheck
+                (templ.packages.${system}.default)
+              ];
+            };
+          }
         );
 
     in
     {
-  
-
-      devShells = eachSystem (pkgs: {
-        default = pkgs.mkShell {
-          shellHook = ''
-            # Set here the env vars you want to be available in the shell
-          '';
-          hardeningDisable = [ "all" ];
-
-          packages = with pkgs; [
-            go
-            shellcheck
-          ];
-        };
-      });
+      devShells = eachSystem;
     };
 }

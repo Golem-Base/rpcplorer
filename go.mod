@@ -3,7 +3,7 @@ module github.com/Golem-Base/rpcplorer
 go 1.24.1
 
 require (
-	github.com/a-h/templ v0.3.833
+	github.com/a-h/templ v0.3.847
 	github.com/urfave/cli/v2 v2.27.6
 )
 
