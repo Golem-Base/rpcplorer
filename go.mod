@@ -1,8 +1,11 @@
-module githun.com/Golem-Base/rpcplorer
+module github.com/Golem-Base/rpcplorer
 
 go 1.23.6
 
-require github.com/urfave/cli/v2 v2.27.6
+require (
+	github.com/a-h/templ v0.3.833
+	github.com/urfave/cli/v2 v2.27.6
+)
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.5 // indirect
