@@ -165,6 +165,37 @@ templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Bl
 							{ common.Bytes2Hex(tx.Data()) }
 						</div>
 					</div>
+
+					<!-- Transaction Logs -->
+					<div class="col-span-1 md:col-span-2 border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Transaction Logs:</div>
+						if len(receipt.Logs) > 0 {
+							for i, log := range receipt.Logs {
+								<div class="bg-gray-50 p-4 rounded mb-3">
+									<div class="flex items-center justify-between mb-2">
+										<span class="text-sm font-medium text-gray-700">Log #{ strconv.Itoa(i + 1) }</span>
+										<span class="text-xs text-gray-500">Address: <a href={ templ.SafeURL("/address/" + log.Address.Hex()) } class="text-blue-500 hover:text-blue-700">{ log.Address.Hex() }</a></span>
+									</div>
+									if len(log.Topics) > 0 {
+										<div class="mb-2">
+											<div class="text-xs text-gray-500 mb-1">Topics:</div>
+											for _, topic := range log.Topics {
+												<div class="text-xs font-mono break-all">{ topic.Hex() }</div>
+											}
+										</div>
+									}
+									if len(log.Data) > 0 {
+										<div>
+											<div class="text-xs text-gray-500 mb-1">Data:</div>
+											<div class="text-xs font-mono break-all">{ common.Bytes2Hex(log.Data) }</div>
+										</div>
+									}
+								</div>
+							}
+						} else {
+							<div class="text-gray-500 text-sm">No logs for this transaction</div>
+						}
+					</div>
 				</div>
 			</div>
 		</div>
