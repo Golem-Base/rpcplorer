@@ -9,6 +9,20 @@ import (
 	"time"
 )
 
+// Helper function to get transaction type name
+func getTxTypeName(txType uint8) string {
+	switch txType {
+	case 0:
+		return "Legacy"
+	case 1:
+		return "Access List"
+	case 2:
+		return "EIP-1559"
+	default:
+		return "Unknown"
+	}
+}
+
 templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Block, currentGasPrice *big.Int, from common.Address) {
 	@Layout("Transaction Details | RPCPlorer") {
 		<div class="container mx-auto px-4 py-8">
@@ -133,6 +147,14 @@ templ Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Bl
 						<div class="text-gray-500 text-sm mb-1">Nonce:</div>
 						<div>
 							{ fmt.Sprintf("%d", tx.Nonce()) }
+						</div>
+					</div>
+					
+					<!-- Transaction Type -->
+					<div class="border-b pb-3">
+						<div class="text-gray-500 text-sm mb-1">Type:</div>
+						<div>
+							0x{ fmt.Sprintf("%x", tx.Type()) } ({ getTxTypeName(tx.Type()) })
 						</div>
 					</div>
 					

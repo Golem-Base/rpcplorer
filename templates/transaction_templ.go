@@ -17,6 +17,20 @@ import (
 	"time"
 )
 
+// Helper function to get transaction type name
+func getTxTypeName(txType uint8) string {
+	switch txType {
+	case 0:
+		return "Legacy"
+	case 1:
+		return "Access List"
+	case 2:
+		return "EIP-1559"
+	default:
+		return "Unknown"
+	}
+}
+
 func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Block, currentGasPrice *big.Int, from common.Address) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -57,7 +71,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(tx.Hash().Hex())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 23, Col: 61}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 37, Col: 61}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -70,7 +84,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(tx.Hash().Hex())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 26, Col: 35}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 40, Col: 35}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -107,7 +121,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(block.Number().String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 50, Col: 137}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 64, Col: 137}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -120,7 +134,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(block.Transactions().Len()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 51, Col: 83}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 65, Col: 83}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -133,7 +147,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(time.Unix(int64(block.Time()), 0).Format(time.RFC1123))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 59, Col: 63}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 73, Col: 63}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
@@ -155,7 +169,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var10 string
 			templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(from.Hex())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 68, Col: 20}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 82, Col: 20}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 			if templ_7745c5c3_Err != nil {
@@ -168,7 +182,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var11 string
 			templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(from.Hex())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 72, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 86, Col: 31}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 			if templ_7745c5c3_Err != nil {
@@ -195,7 +209,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 				var templ_7745c5c3_Var13 string
 				templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(tx.To().Hex())
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 85, Col: 24}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 99, Col: 24}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 				if templ_7745c5c3_Err != nil {
@@ -208,7 +222,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 				var templ_7745c5c3_Var14 string
 				templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(tx.To().Hex())
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 89, Col: 35}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 103, Col: 35}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 				if templ_7745c5c3_Err != nil {
@@ -231,7 +245,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var15 string
 			templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(tx.Value().String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 103, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 117, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 			if templ_7745c5c3_Err != nil {
@@ -244,7 +258,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var16 string
 			templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.8f", float64(receipt.GasUsed)*float64(tx.GasPrice().Uint64())/1e18))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 111, Col: 95}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 125, Col: 95}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 			if templ_7745c5c3_Err != nil {
@@ -257,7 +271,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var17 string
 			templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(tx.GasPrice().String())
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 119, Col: 31}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 133, Col: 31}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 			if templ_7745c5c3_Err != nil {
@@ -270,7 +284,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var18 string
 			templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%.2f", float64(tx.GasPrice().Uint64())/1e9))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 119, Col: 99}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 133, Col: 99}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 			if templ_7745c5c3_Err != nil {
@@ -283,7 +297,7 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d | %d (%0.2f%%)", tx.Gas(), receipt.GasUsed, float64(receipt.GasUsed)/float64(tx.Gas())*100))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 127, Col: 120}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 141, Col: 120}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
@@ -296,26 +310,52 @@ func Transaction(tx *types.Transaction, receipt *types.Receipt, block *types.Blo
 			var templ_7745c5c3_Var20 string
 			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d", tx.Nonce()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 135, Col: 38}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 149, Col: 38}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "</div></div><!-- Input Data --><div class=\"col-span-1 md:col-span-2 border-b pb-3\"><div class=\"text-gray-500 text-sm mb-1\">Input Data:</div><div class=\"bg-gray-50 p-3 rounded text-xs font-mono overflow-x-auto break-all\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "</div></div><!-- Transaction Type --><div class=\"border-b pb-3\"><div class=\"text-gray-500 text-sm mb-1\">Type:</div><div>0x")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var21 string
-			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(common.Bytes2Hex(tx.Data()))
+			templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%x", tx.Type()))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 143, Col: 36}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 157, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</div></div></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, " (")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var22 string
+			templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(getTxTypeName(tx.Type()))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 157, Col: 69}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, ")</div></div><!-- Input Data --><div class=\"col-span-1 md:col-span-2 border-b pb-3\"><div class=\"text-gray-500 text-sm mb-1\">Input Data:</div><div class=\"bg-gray-50 p-3 rounded text-xs font-mono overflow-x-auto break-all\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var23 string
+			templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(common.Bytes2Hex(tx.Data()))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/transaction.templ`, Line: 165, Col: 36}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</div></div></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
