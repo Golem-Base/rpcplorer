@@ -33,8 +33,14 @@ func (h *APIHandler) GetLatestBlocks(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Calculate how many blocks we can fetch
+	numBlocksToFetch := 5
+	if header.Number.Cmp(big.NewInt(5)) < 0 {
+		numBlocksToFetch = int(header.Number.Int64() + 1) // +1 because block 0 exists
+	}
+
 	// Fetch the latest blocks
-	for i := 0; i < 5; i++ {
+	for i := 0; i < numBlocksToFetch; i++ {
 		blockNum := new(big.Int).Sub(header.Number, big.NewInt(int64(i)))
 		block, err := h.client.BlockByNumber(r.Context(), blockNum)
 		if err != nil {
