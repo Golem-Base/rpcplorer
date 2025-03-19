@@ -34,7 +34,8 @@
           };
           in
           {
-            default = pkgs.mkShell {
+            default = import ./package.nix { inherit pkgs; };
+            devShell = pkgs.mkShell {
               shellHook = ''
                 # Set here the env vars you want to be available in the shell
               '';
@@ -54,5 +55,6 @@
     in
     {
       devShells = eachSystem;
+      packages = eachSystem;
     };
 }
