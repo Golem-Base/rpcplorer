@@ -50,7 +50,7 @@ func main() {
 			mux := http.NewServeMux()
 
 			// Register API routes for HTMX
-			handlers.RegisterAPIRoutes(mux, client)
+			handlers.RegisterAPIRoutes(mux, client, cfg.nodeURL)
 
 			// Main page handler
 			mux.HandleFunc("GET /", handlers.HomeHandler(client, log))

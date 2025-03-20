@@ -10,12 +10,14 @@ import (
 )
 
 type APIHandler struct {
-	client *ethclient.Client
+	client  *ethclient.Client
+	nodeURL string
 }
 
-func NewAPIHandler(client *ethclient.Client) *APIHandler {
+func NewAPIHandler(client *ethclient.Client, nodeURL string) *APIHandler {
 	return &APIHandler{
-		client: client,
+		client:  client,
+		nodeURL: nodeURL,
 	}
 }
 
@@ -90,13 +92,31 @@ func (h *APIHandler) GetLatestTransactions(w http.ResponseWriter, r *http.Reques
 	renderTransactionsList(w, r, blocks)
 }
 
+// GetNetworkInfo returns network ID and node URL
+func (h *APIHandler) GetNetworkInfo(w http.ResponseWriter, r *http.Request) {
+	chainID, err := h.client.ChainID(r.Context())
+	if err != nil {
+		http.Error(w, "Failed to get chain ID", http.StatusInternalServerError)
+		return
+	}
+
+	// Render the network info component
+	component := templates.NetworkInfo(chainID.Uint64(), h.nodeURL)
+	err = component.Render(r.Context(), w)
+	if err != nil {
+		http.Error(w, "Error rendering network info", http.StatusInternalServerError)
+		return
+	}
+}
+
 // RegisterRoutes registers all API routes
-func RegisterAPIRoutes(mux *http.ServeMux, client *ethclient.Client) {
-	handler := NewAPIHandler(client)
+func RegisterAPIRoutes(mux *http.ServeMux, client *ethclient.Client, nodeURL string) {
+	handler := NewAPIHandler(client, nodeURL)
 
 	// API routes for HTMX
 	mux.HandleFunc("GET /api/blocks", handler.GetLatestBlocks)
 	mux.HandleFunc("GET /api/transactions", handler.GetLatestTransactions)
+	mux.HandleFunc("GET /api/network-info", handler.GetNetworkInfo)
 }
 
 // Render the blocks list component using templ

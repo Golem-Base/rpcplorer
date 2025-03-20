@@ -8,7 +8,9 @@ package templates
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-func Layout(title string) templ.Component {
+import "fmt"
+
+func NetworkInfo(chainID uint64, nodeURL string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -29,28 +31,83 @@ func Layout(title string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex items-center justify-center space-x-4 text-sm text-gray-500\"><div class=\"flex items-center\"><i class=\"fas fa-network-wired mr-2\"></i> <span>Network ID: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
+		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprintf("%d", chainID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layout.templ`, Line: 9, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layout.templ`, Line: 9, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</title><script src=\"https://cdn.tailwindcss.com\"></script><script src=\"https://unpkg.com/htmx.org@1.9.10\" integrity=\"sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC\" crossorigin=\"anonymous\"></script><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\"><script>\n\t\t\t\tfunction copyToClipboard(element) {\n\t\t\t\t\tconst textToCopy = element.getAttribute('data-value');\n\t\t\t\t\tnavigator.clipboard.writeText(textToCopy);\n\t\t\t\t}\n\t\t\t</script><style>\n\t\t\t\t.htmx-indicator{opacity:0;transition:opacity 200ms ease-in}\n\t\t\t\t.htmx-request .htmx-indicator{opacity:1}\n\t\t\t\t.htmx-request.htmx-indicator{opacity:1}\n\t\t\t\t.fade-me-in.htmx-swapping{opacity:0;transition:opacity 200ms ease-out}\n\t\t\t\t.fade-me-in{opacity:1;transition:opacity 200ms ease-in}\n\t\t\t</style></head><body class=\"bg-gray-50 flex flex-col min-h-screen\"><header class=\"bg-white shadow-md\"><div class=\"container mx-auto px-4\"><div class=\"flex justify-between items-center py-4\"><div class=\"flex items-center\"><a href=\"/\" class=\"text-blue-600 font-bold text-xl\">RPCPlorer</a></div><div class=\"hidden md:flex flex-1 justify-center px-4\"><div class=\"relative w-full max-w-xl\"><form hx-get=\"/search\" hx-trigger=\"submit\" hx-swap=\"none\" class=\"m-0\"><input type=\"text\" name=\"q\" placeholder=\"Search by Address / Txn Hash / Block Number\" class=\"w-full py-2 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500\"> <button type=\"submit\" class=\"absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400\"><i class=\"fas fa-search\"></i></button></form></div></div><nav class=\"hidden md:flex space-x-6\"><a href=\"/\" class=\"text-gray-600 hover:text-blue-600\">Home</a> <a href=\"/blocks\" class=\"text-gray-600 hover:text-blue-600\">Blocks</a></nav><button class=\"md:hidden\"><i class=\"fas fa-bars text-gray-600\"></i></button></div></div></header><main class=\"flex-grow\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "</span></div><div class=\"flex items-center\"><i class=\"fas fa-server mr-2\"></i> <span>Node: ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ_7745c5c3_Var1.Render(ctx, templ_7745c5c3_Buffer)
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(nodeURL)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layout.templ`, Line: 13, Col: 24}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</main><footer class=\"bg-gray-800 text-white\"><div class=\"container mx-auto px-4 py-8\"><div class=\"grid grid-cols-1 md:grid-cols-4 gap-8\"><div><h3 class=\"text-lg font-semibold mb-4\">RPCPlorer</h3><p class=\"text-gray-400\">Explore blockchain data with ease</p></div><div><h3 class=\"text-lg font-semibold mb-4\">Company</h3><ul class=\"space-y-2 text-gray-400\"><li><a href=\"#\" class=\"hover:text-white\">About Us</a></li><li><a href=\"#\" class=\"hover:text-white\">Careers</a></li><li><a href=\"#\" class=\"hover:text-white\">Contact Us</a></li></ul></div><div><h3 class=\"text-lg font-semibold mb-4\">Resources</h3><ul class=\"space-y-2 text-gray-400\"><li><a href=\"#\" class=\"hover:text-white\">Documentation</a></li><li><a href=\"#\" class=\"hover:text-white\">API</a></li><li><a href=\"#\" class=\"hover:text-white\">Help Center</a></li></ul></div><div><h3 class=\"text-lg font-semibold mb-4\">Connect</h3><div class=\"flex space-x-4 text-gray-400\"><a href=\"#\" class=\"hover:text-white\"><i class=\"fab fa-twitter\"></i></a> <a href=\"#\" class=\"hover:text-white\"><i class=\"fab fa-github\"></i></a> <a href=\"#\" class=\"hover:text-white\"><i class=\"fab fa-discord\"></i></a></div></div></div><div class=\"border-t border-gray-700 mt-8 pt-6 text-center text-gray-400\"><p>© 2025 Golem Base. All rights reserved.</p></div></div></footer></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</span></div></div>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		return nil
+	})
+}
+
+func Layout(title string) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var4 == nil {
+			templ_7745c5c3_Var4 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<!doctype html><html lang=\"en\"><head><meta charset=\"UTF-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"><title>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var5 string
+		templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(title)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templates/layout.templ`, Line: 24, Col: 17}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</title><script src=\"https://cdn.tailwindcss.com\"></script><script src=\"https://unpkg.com/htmx.org@1.9.10\" integrity=\"sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC\" crossorigin=\"anonymous\"></script><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css\"><script>\n\t\t\t\tfunction copyToClipboard(element) {\n\t\t\t\t\tconst textToCopy = element.getAttribute('data-value');\n\t\t\t\t\tnavigator.clipboard.writeText(textToCopy);\n\t\t\t\t}\n\t\t\t</script><style>\n\t\t\t\t.htmx-indicator{opacity:0;transition:opacity 200ms ease-in}\n\t\t\t\t.htmx-request .htmx-indicator{opacity:1}\n\t\t\t\t.htmx-request.htmx-indicator{opacity:1}\n\t\t\t\t.fade-me-in.htmx-swapping{opacity:0;transition:opacity 200ms ease-out}\n\t\t\t\t.fade-me-in{opacity:1;transition:opacity 200ms ease-in}\n\t\t\t</style></head><body class=\"bg-gray-50 flex flex-col min-h-screen\"><header class=\"bg-white shadow-md\"><div class=\"container mx-auto px-4\"><div class=\"flex justify-between items-center py-4\"><div class=\"flex items-center\"><a href=\"/\" class=\"text-blue-600 font-bold text-xl\">RPCPlorer</a></div><div class=\"hidden md:flex flex-1 justify-center px-4\"><div class=\"relative w-full max-w-xl\"><form hx-get=\"/search\" hx-trigger=\"submit\" hx-swap=\"none\" class=\"m-0\"><input type=\"text\" name=\"q\" placeholder=\"Search by Address / Txn Hash / Block Number\" class=\"w-full py-2 px-4 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500\"> <button type=\"submit\" class=\"absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400\"><i class=\"fas fa-search\"></i></button></form></div></div><nav class=\"hidden md:flex space-x-6\"><a href=\"/\" class=\"text-gray-600 hover:text-blue-600\">Home</a> <a href=\"/blocks\" class=\"text-gray-600 hover:text-blue-600\">Blocks</a></nav><button class=\"md:hidden\"><i class=\"fas fa-bars text-gray-600\"></i></button></div><!-- Network Info Row --><div class=\"py-2\" hx-get=\"/api/network-info\" hx-trigger=\"load\"><div class=\"htmx-indicator text-center\"><i class=\"fas fa-circle-notch fa-spin\"></i></div></div></div></header><main class=\"flex-grow\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ_7745c5c3_Var4.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "</main><footer class=\"bg-gray-800 text-white\"><div class=\"container mx-auto px-4 py-8\"><div class=\"grid grid-cols-1 md:grid-cols-4 gap-8\"><div><h3 class=\"text-lg font-semibold mb-4\">RPCPlorer</h3><p class=\"text-gray-400\">Explore blockchain data with ease</p></div><div><h3 class=\"text-lg font-semibold mb-4\">Company</h3><ul class=\"space-y-2 text-gray-400\"><li><a href=\"#\" class=\"hover:text-white\">About Us</a></li><li><a href=\"#\" class=\"hover:text-white\">Careers</a></li><li><a href=\"#\" class=\"hover:text-white\">Contact Us</a></li></ul></div><div><h3 class=\"text-lg font-semibold mb-4\">Resources</h3><ul class=\"space-y-2 text-gray-400\"><li><a href=\"#\" class=\"hover:text-white\">Documentation</a></li><li><a href=\"#\" class=\"hover:text-white\">API</a></li><li><a href=\"#\" class=\"hover:text-white\">Help Center</a></li></ul></div><div><h3 class=\"text-lg font-semibold mb-4\">Connect</h3><div class=\"flex space-x-4 text-gray-400\"><a href=\"#\" class=\"hover:text-white\"><i class=\"fab fa-twitter\"></i></a> <a href=\"#\" class=\"hover:text-white\"><i class=\"fab fa-github\"></i></a> <a href=\"#\" class=\"hover:text-white\"><i class=\"fab fa-discord\"></i></a></div></div></div><div class=\"border-t border-gray-700 mt-8 pt-6 text-center text-gray-400\"><p>© 2025 Golem Base. All rights reserved.</p></div></div></footer></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

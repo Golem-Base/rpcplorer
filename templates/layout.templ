@@ -1,5 +1,20 @@
 package templates
 
+import "fmt"
+
+templ NetworkInfo(chainID uint64, nodeURL string) {
+	<div class="flex items-center justify-center space-x-4 text-sm text-gray-500">
+		<div class="flex items-center">
+			<i class="fas fa-network-wired mr-2"></i>
+			<span>Network ID: { fmt.Sprintf("%d", chainID) }</span>
+		</div>
+		<div class="flex items-center">
+			<i class="fas fa-server mr-2"></i>
+			<span>Node: { nodeURL }</span>
+		</div>
+	</div>
+}
+
 templ Layout(title string) {
 	<!DOCTYPE html>
 	<html lang="en">
@@ -56,6 +71,13 @@ templ Layout(title string) {
 						<button class="md:hidden">
 							<i class="fas fa-bars text-gray-600"></i>
 						</button>
+					</div>
+
+					<!-- Network Info Row -->
+					<div class="py-2" hx-get="/api/network-info" hx-trigger="load">
+						<div class="htmx-indicator text-center">
+							<i class="fas fa-circle-notch fa-spin"></i>
+						</div>
 					</div>
 				</div>
 			</header>
