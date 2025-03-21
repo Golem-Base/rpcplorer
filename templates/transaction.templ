@@ -26,9 +26,10 @@ func getTxTypeName(txType uint8) string {
 
 var topicToEventName = map[common.Hash]string{
 	common.HexToHash("0xce4b4ad6891d716d0b1fba2b4aeb05ec20edadb01df512263d0dde423736bbb9"): "GolemBase Entity Created",
-	common.HexToHash("0xf371f40aa6932ad9dacbee236e5f3b93d478afe3934b5cfec5ea0d800a41d165"): "GolemBase Entity Deleted",
-	common.HexToHash("0x0297b0e6eaf1bc2289906a8123b8ff5b19e568a60d002d47df44f8294422af93"): "GolemBase Entity Updated",
+	common.HexToHash("0x0297b0e6eaf1bc2289906a8123b8ff5b19e568a60d002d47df44f8294422af93"): "GolemBase Entity Deleted",
+	common.HexToHash("0xf371f40aa6932ad9dacbee236e5f3b93d478afe3934b5cfec5ea0d800a41d165"): "GolemBase Entity Updated",
 }
+
 
 // Helper function to identify and format Golem Base storage events
 func getGolemBaseEventName(topic common.Hash) string {
