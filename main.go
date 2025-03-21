@@ -15,6 +15,7 @@ func main() {
 
 	cfg := struct {
 		nodeURL string
+		addr    string
 	}{}
 
 	app := &cli.App{
@@ -26,6 +27,12 @@ func main() {
 				Destination: &cfg.nodeURL,
 				EnvVars:     []string{"NODE_URL"},
 				Required:    true,
+			},
+			&cli.StringFlag{
+				Name:        "addr",
+				Usage:       "Address",
+				Destination: &cfg.addr,
+				EnvVars:     []string{"ADDR"},
 			},
 		},
 		Action: func(c *cli.Context) error {
@@ -70,8 +77,8 @@ func main() {
 			// Search handler
 			mux.HandleFunc("GET /search", handlers.SearchHandler(log))
 
-			log.Info("Starting server on :8080")
-			return http.ListenAndServe(":8080", mux)
+			log.Info("Starting server", "address", cfg.addr)
+			return http.ListenAndServe(cfg.addr, mux)
 		},
 	}
 
