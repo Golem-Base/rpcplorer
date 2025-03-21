@@ -33,6 +33,7 @@ func main() {
 				Usage:       "Address",
 				Destination: &cfg.addr,
 				EnvVars:     []string{"ADDR"},
+				Value:       ":8080",
 			},
 		},
 		Action: func(c *cli.Context) error {
