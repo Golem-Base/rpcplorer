@@ -1,0 +1,8 @@
+.git
+Dockerfile
+.github
+README.md
+package.nix
+flake.nix
+flake.lock
+Procfile
