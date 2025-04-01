@@ -46,7 +46,7 @@ jobs:
           fi
           
           if [[ "${{ github.ref }}" == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/v}
+            VERSION=${GITHUB_REF#refs/tags/}
             TAGS="$TAGS,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:$VERSION"
           fi
           
