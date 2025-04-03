@@ -83,11 +83,10 @@ After modifying `.templ` files, regenerate the Go code:
 templ generate
 ```
 
-## Dependencies
+## License
 
-- [go-ethereum](https://github.com/ethereum/go-ethereum) - Ethereum Go library
-- [templ](https://github.com/a-h/templ) - Type-safe HTML templating
-- [HTMX](https://htmx.org/) - Frontend interactivity
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [urfave/cli](https://github.com/urfave/cli) - Command-line interface
+This project is licensed under the GNU General Public License v3.0 - see the [LICENSE](LICENSE) file for details.
 
+The GNU General Public License is a free, copyleft license for software and other kinds of works. This license guarantees your freedom to share and change all versions of a program, to make sure it remains free software for all its users.
+
+For more information about the GNU GPL, please visit [https://www.gnu.org/licenses/](https://www.gnu.org/licenses/).
