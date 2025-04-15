@@ -8,9 +8,21 @@
 
     systems.url = "github:nix-systems/default";
 
-    templ.url = "github:a-h/templ/v0.3.833";
+    templ = {
+      url = "github:a-h/templ/v0.3.833";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-unstable.follows = "nixpkgs";
+      };
+    };
 
-    gorefresh.url = "github:draganm/gorefresh/v0.0.4";
+    gorefresh = {
+      url = "github:draganm/gorefresh/v0.0.4";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        blueprint.inputs.systems.follows = "systems";
+      };
+    };
   };
 
   outputs =
